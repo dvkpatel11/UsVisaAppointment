@@ -10,6 +10,7 @@
 - activate it: `source venv/bin/activate`
 - install requirements: `pip install -r requirements.txt`
 - install playwright : `playwright install`
+- install playwright browsers : `playwright install-deps`
 
 ## config
 - create `creds.py` inside code folder and fill values as below
@@ -27,6 +28,9 @@ reschedule = False
 send_telegram_notification =False
 TOKEN = "telegram bot token id"
 chat_id = "telegram chat id"
+browsers = 10
+is_multiple_users = False
+applicants_url = "?utf8=✓&commit=Continue"
 ```
 
 ## run(wip)

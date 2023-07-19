@@ -19,7 +19,7 @@ sign_in_id = "Sign In"
 appointment_link = (
     appointment_url
     if appointment_url
-    else "https://ais.usvisa-info.com/en-ca/niv/schedule/{}/appointment"
+    else "https://ais.usvisa-info.com/en-ca/niv/schedule/{}/appointment/"
 )
 continue_id = "Continue"
 location_id = "#appointments_consulate_appointment_facility_id"
@@ -131,8 +131,17 @@ class VisaAutomate:
             self.page.get_by_role("menuitem", name=continue_id).click()
 
     def go_to_appointments(self, appoint_id):
-        self.page.goto(appointment_link.format(appoint_id))
-        self.page.wait_for_load_state("networkidle")
+        if not is_multiple_users:
+            self.page.goto(appointment_link.format(appoint_id))
+            self.page.wait_for_load_state("networkidle")
+        else:
+            final_url = appointment_link.format(appoint_id) + applicants_url
+            self.page.goto(final_url)
+            self.page.wait_for_load_state("networkidle")
+
+        # if is_multiple_users:
+        #     self.page.get_by_text("Continue").click()
+        #     self.page.wait_for_load_state("networkidle")
 
     def check_availability(self, cur_date):
         global found_date
@@ -278,12 +287,21 @@ def main():
 
 
 if __name__ == "__main__":
-    v = VisaAutomate()
-    v.login(username=user, passwd=password, cont=False)
-    # get current appointment date to compare
-    v.get_date()
+    for i in range(browsers):
+        print("Browser Session number:", i)
+        v = VisaAutomate()
+        try:
+            v.login(username=user, passwd=password, cont=False)
+            # get current appointment date to compare
+            v.get_date()
 
-    for _ in range(check):
-        v.go_to_appointments(appointment_id)
-        v.run_check()
-        time.sleep(time_gap)
+            for j in range(check):
+                print("Checking Session number:", j)
+                v.go_to_appointments(appointment_id)
+                v.run_check()
+                time.sleep(time_gap)
+        except Exception as e:
+            print("Error while checking ", e)
+
+        finally:
+            v.close_browser()

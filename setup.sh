@@ -3,6 +3,7 @@ source venv/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
 playwright install
+playwright install-deps
 
 
 # for development
