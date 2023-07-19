@@ -4,6 +4,7 @@ import time
 from datetime import datetime, timedelta
 from pathlib import Path
 
+import requests
 from dateutil import parser
 from playwright.sync_api import TimeoutError, sync_playwright
 
@@ -216,10 +217,16 @@ class VisaAutomate:
                     result, con = self.check_availability(cur_date)
 
                     if result:
-                        print(
-                            "got the date,, book ",
-                            found_date.strftime("%Y-%m-%d %H:%M:%S"),
+                        message = (
+                            "Date available at"
+                            + loc
+                            + " on  "
+                            + found_date.strftime("%Y-%m-%d")
                         )
+                        print(message)
+                        if send_telegram_notification:
+                            url = f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={message}"
+                            print(requests.get(url).json())  # this send
 
                         if reschedule:
                             self.page.query_selector(match_id).click()

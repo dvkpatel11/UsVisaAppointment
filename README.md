@@ -24,6 +24,9 @@ visa_locations = ["Toronto", "Ottawa", "Vancouver", "Calgary"]
 check = 12
 time_gap = 300
 reschedule = False
+send_telegram_notification =False
+TOKEN = "telegram bot token id"
+chat_id = "telegram chat id"
 ```
 
 ## run(wip)
