@@ -19,7 +19,7 @@ sign_in_id = "Sign In"
 appointment_link = (
     appointment_url
     if appointment_url
-    else "https://ais.usvisa-info.com/en-ca/niv/schedule/{}/appointment/"
+    else "https://ais.usvisa-info.com/en-ca/niv/schedule/{}/appointment"
 )
 continue_id = "Continue"
 location_id = "#appointments_consulate_appointment_facility_id"
@@ -37,7 +37,7 @@ calender_dropdown_date_id = "#appointments_consulate_appointment_date"
 next_link = "Next"
 a_elements = "//a[@href]"
 appointment_date_id = ".consular-appt"
-appointment_date_regex = r".*Appointment:(.*)Vancouver local time.*$"
+appointment_date_regex = r".*Appointment:(.*)(?:Vancouver|Toronto|Calgary|Ottawa|Halifax|Montreal|Quebec City) local time.*$"
 date_of_appointment_id = "#appointments_consulate_appointment_date"
 calender_id = ".ui-datepicker-title"
 datepicker_calendar_id = "#ui-datepicker-calendar"
