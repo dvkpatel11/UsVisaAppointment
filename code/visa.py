@@ -108,13 +108,17 @@ class VisaAutomate:
     def __init__(self):
         self.playwright = sync_playwright().start()
         self.browser = self.playwright.chromium.launch(headless=False)
-        self.page = self.browser.new_page()
+        # Create a new page within the context
         self.ind = 0
         self.folder = str(int(time.time()))
         Path(f"./screenshots/{self.folder}").mkdir(parents=True, exist_ok=True)
 
     def go_to_page(self, page):
         self.page.goto(page)
+
+    def create_new_contex(self):
+        self.context = self.browser.new_context()
+        self.page = self.context.new_page()
 
     def screenshot(self, name: str = "image"):
         self.page.screenshot(path=f"./screenshots/{self.folder}/{name}-{self.ind}.png")
@@ -271,6 +275,9 @@ class VisaAutomate:
             else:
                 print(f"No dates available for {loc}")
 
+    def close_contex(self):
+        self.context.close()
+
     def close_browser(self):
         self.browser.close()
 
@@ -285,10 +292,11 @@ def main():
 
 
 if __name__ == "__main__":
+    v = VisaAutomate()
     for i in range(browsers):
         print("Browser Session number:", i)
-        v = VisaAutomate()
         try:
+            v.create_new_contex()
             v.login(username=user, passwd=password, cont=False)
             # get current appointment date to compare
             v.get_date()
@@ -302,4 +310,5 @@ if __name__ == "__main__":
             print("Error while checking ", e)
 
         finally:
-            v.close_browser()
+            v.close_contex()
+    v.close_browser()
