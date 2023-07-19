@@ -30,7 +30,6 @@ TOKEN = "telegram bot token id"
 chat_id = "telegram chat id"
 browsers = 10
 is_multiple_users = False
-applicants_url = "?utf8=✓&commit=Continue"
 ```
 
 ## run(wip)
