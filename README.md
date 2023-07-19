@@ -21,6 +21,9 @@ password = "Password"
 appointment_id = "12345678"
 appointment_url = "https://ais.usvisa-info.com/en-ca/niv/schedule/{}/appointment"
 visa_locations = ["Toronto", "Ottawa", "Vancouver", "Calgary"]
+check = 12
+time_gap = 300
+reschedule = False
 ```
 
 ## run(wip)
