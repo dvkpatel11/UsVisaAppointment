@@ -248,10 +248,10 @@ class VisaAutomate:
                             option = options.strip()[:5]
                             print(f"selecting time : {option}")
                             self.page.locator(time_appointment_id).select_option(option)
-
-                            # TODO uncomment click reschedule
-                            # self.page.get_by_text("Reschedule").click()
-                            time.sleep(30)
+                            # Not tested below this
+                            self.page.get_by_text("Reschedule").last.click()
+                            self.page.get_by_text("Confirm").last.click()
+                            time.sleep(5)
                         break
 
                     else:
