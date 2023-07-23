@@ -306,7 +306,7 @@ if __name__ == "__main__":
                 v.go_to_appointments(appointment_id)
                 v.run_check()
                 nums = [5, 6, 7, 8, 9]
-                time.sleep(random.choice(nums))
+                time.sleep(random.choice(nums) * 60)
         except Exception as e:
             print("Error while checking ", e)
 
