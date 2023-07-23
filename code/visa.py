@@ -1,4 +1,5 @@
 # Aksharam Aham Purushottam Dashoshmi
+import random
 import re
 import time
 from datetime import datetime, timedelta
@@ -304,7 +305,8 @@ if __name__ == "__main__":
                 print("Checking Session number:", j)
                 v.go_to_appointments(appointment_id)
                 v.run_check()
-                time.sleep(time_gap)
+                nums = [5, 6, 7, 8, 9]
+                time.sleep(random.choice(nums))
         except Exception as e:
             print("Error while checking ", e)
 
