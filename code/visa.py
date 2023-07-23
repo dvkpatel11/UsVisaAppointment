@@ -139,7 +139,6 @@ class VisaAutomate:
             self.page.goto(appointment_link.format(appoint_id))
             self.page.wait_for_load_state("networkidle")
         else:
-            final_url = appointment_link.format(appoint_id) + applicants_url
             self.page.goto(appointment_link.format(appoint_id))
             self.page.wait_for_load_state("networkidle")
             self.page.get_by_text("Continue").last.click()
