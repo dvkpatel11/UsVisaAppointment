@@ -51,6 +51,7 @@ time_appointment_id = "#appointments_consulate_appointment_time"
 network_req_regex = r"^[0-9]{2}\.json\?appointments\[expedite\]=false$"
 
 json_response_link = f"{appointment_url.format(appointment_id)}/days/"
+soft_ban_count = 0
 
 
 def month_to_num(m):
@@ -208,6 +209,8 @@ class VisaAutomate:
     def run_check(self):
         global cur_date
         global found_date
+        flag = False
+        avai = list()
 
         for loc in visa_locations:
             self.page.route(re.compile(network_req_regex), handle_request)
@@ -215,6 +218,7 @@ class VisaAutomate:
             self.select_location(loc)
 
             if self.is_date_available():
+                avai.append(True)
                 if not cur_date:
                     current_date = datetime.now()
                     # Calculate date two months in the future
@@ -273,22 +277,16 @@ class VisaAutomate:
                 self.page.keyboard.press("Escape")
 
             else:
+                avai.append(False)
                 print(f"No dates available for {loc}")
+
+        return any(avai)
 
     def close_contex(self):
         self.context.close()
 
     def close_browser(self):
         self.browser.close()
-
-
-def main():
-    v = VisaAutomate()
-    v.login(username=user, passwd=password, cont=False)
-    v.get_date()
-    v.go_to_appointments(appointment_id)
-    v.run_check()
-    # v.close_browser()
 
 
 if __name__ == "__main__":
@@ -304,9 +302,19 @@ if __name__ == "__main__":
             for j in range(check):
                 print("Checking Session number:", j)
                 v.go_to_appointments(appointment_id)
-                v.run_check()
+                flag = v.run_check()
+
+                if flag:
+                    soft_ban_count = 0
+                else:
+                    soft_ban_count += 1
+                    if soft_ban_count >= 3:
+                        time.sleep(3600)
+                        soft_ban_count = 0
+
                 nums = [5, 6, 7, 8, 9]
                 time.sleep(random.choice(nums) * 60)
+
         except Exception as e:
             print("Error while checking ", e)
 
