@@ -189,6 +189,7 @@ class VisaAutomate:
             date_obj = parser.parse(date_text)
             print(f"current date is {date_obj}")
             cur_date = date_obj
+            # cur_date = datetime(2025, 7, 31)
             return date_obj
 
     def select_location(self, option):
@@ -233,7 +234,7 @@ class VisaAutomate:
 
                     if result:
                         message = (
-                            "Date available at"
+                            "Date available at "
                             + loc
                             + " on  "
                             + found_date.strftime("%Y-%m-%d")
@@ -244,18 +245,34 @@ class VisaAutomate:
                             print(requests.get(url).json())  # this send
 
                         if reschedule:
-                            self.page.query_selector(match_id).click()
-                            time.sleep(0.5)
-                            options = self.page.locator(
-                                time_appointment_id
-                            ).text_content()
-                            option = options.strip()[:5]
-                            print(f"selecting time : {option}")
-                            self.page.locator(time_appointment_id).select_option(option)
-                            # Not tested below this
-                            self.page.get_by_text("Reschedule").last.click()
-                            self.page.get_by_text("Confirm").last.click()
-                            time.sleep(5)
+                            try:
+                                self.page.query_selector(match_id).click()
+                                time.sleep(0.5)
+
+                                options = self.page.locator(
+                                    time_appointment_id
+                                ).text_content()
+                                option = options.strip()[:5]
+                                print(f"selecting time : {option}")
+                                self.page.locator(time_appointment_id).select_option(
+                                    option
+                                )
+                                # Not tested below this
+                                self.page.get_by_text("Reschedule").last.click()
+                                self.page.get_by_text("Confirm").last.click()
+                                time.sleep(5)
+                                message = f"booked date for {user[:3]}"
+                                print(message)
+                                if send_telegram_notification:
+                                    url = f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={message}"
+                                    print(requests.get(url).json())
+                            except Exception:
+                                message = f"error while booking date for {user[:3]}"
+                                print(message)
+                                if send_telegram_notification:
+                                    url = f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={message}"
+                                    print(requests.get(url).json())
+
                         break
 
                     else:
@@ -309,6 +326,7 @@ if __name__ == "__main__":
                 else:
                     soft_ban_count += 1
                     if soft_ban_count >= 3:
+                        print("sleeping for an hour")
                         time.sleep(3600)
                         soft_ban_count = 0
 
