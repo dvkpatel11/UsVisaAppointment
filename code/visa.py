@@ -189,7 +189,8 @@ class VisaAutomate:
             date_obj = parser.parse(date_text)
             print(f"current date is {date_obj}")
             cur_date = date_obj
-            # cur_date = datetime(2025, 7, 31)
+            if min_cur_date:
+                cur_date = min_cur_date
             return date_obj
 
     def select_location(self, option):
@@ -329,9 +330,10 @@ if __name__ == "__main__":
                         print("sleeping for an hour")
                         time.sleep(3600)
                         soft_ban_count = 0
+                        break
 
                 nums = [5, 6, 7, 8, 9]
-                time.sleep(random.choice(nums) * 60)
+                time.sleep(random.choice(nums) * 30)
 
         except Exception as e:
             print("Error while checking ", e)
