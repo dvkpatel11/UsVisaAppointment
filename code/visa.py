@@ -333,7 +333,9 @@ if __name__ == "__main__":
                         break
 
                 nums = [5, 6, 7, 8, 9]
-                time.sleep(random.choice(nums) * 30)
+                sleep = random.choice(nums) * 30
+                print(f"sleeping for {sleep} seconds")
+                time.sleep(sleep)
 
         except Exception as e:
             print("Error while checking ", e)
