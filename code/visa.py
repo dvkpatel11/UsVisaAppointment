@@ -109,7 +109,7 @@ def wait_for_location_response(page, location):
 class VisaAutomate:
     def __init__(self):
         self.playwright = sync_playwright().start()
-        self.browser = self.playwright.chromium.launch(headless=False)
+        self.browser = self.playwright.chromium.launch(headless=True)
         # Create a new page within the context
         self.ind = 0
         self.folder = str(int(time.time()))
@@ -339,6 +339,8 @@ if __name__ == "__main__":
 
         except Exception as e:
             print("Error while checking ", e)
+            print("sleeping for three hour")
+            time.sleep(3600 * 3)
 
         finally:
             v.close_contex()
