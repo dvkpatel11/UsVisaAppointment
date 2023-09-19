@@ -3,9 +3,11 @@
 # Env setup
 
 ## Pre-requisite
-- make sure python3 is installed 
+
+- make sure python3 is installed
 
 ## setup
+
 - create virtaul env: `python -m venv venv`
 - activate it: `source venv/bin/activate`
 - install requirements: `pip install -r requirements.txt`
@@ -13,6 +15,7 @@
 - install playwright browsers : `playwright install-deps`
 
 ## config
+
 - create `creds.py` inside code folder and fill values as below
 
 ```
@@ -25,12 +28,15 @@ visa_locations = ["Toronto", "Ottawa", "Vancouver", "Calgary"]
 check = 12
 time_gap = 300
 reschedule = False
-send_telegram_notification =False
+send_telegram_notification =True
 TOKEN = "telegram bot token id"
 chat_id = "telegram chat id"
 browsers = 10
 is_multiple_users = False
 ```
 
+- Update the time to sleep to number of seconds you want the script to sleep before kicking off. Seconds from now() to 10 PM is ideal
+
 ## run(wip)
+
 `python ./code/visa.py`
