@@ -4,12 +4,12 @@
 
 ## Pre-requisite
 
-- make sure python3 is installed
+- Make sure python3 is installed
 
 ## setup
 
-- create virtaul env: `python -m venv venv`
-- activate it: `source venv/bin/activate`
+- create virtaul env: `python -m venv myenv`
+- activate it: `source myenv/bin/activate`
 - install requirements: `pip install -r requirements.txt`
 - install playwright : `playwright install`
 - install playwright browsers : `playwright install-deps`
@@ -37,6 +37,6 @@ is_multiple_users = False
 
 - Update the time to sleep to number of seconds you want the script to sleep before kicking off. Seconds from now() to 10 PM is ideal
 
-## run(wip)
+## run
 
 `python ./code/visa.py`
