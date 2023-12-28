@@ -8,7 +8,7 @@ from pathlib import Path
 from dateutil import parser
 from playwright.sync_api import TimeoutError, sync_playwright
 
-from .creds import *
+from creds import *
 
 MAX_POLLS = 30
 MIN_SLEEP_BEFORE_RETRY = 30  # seconds
@@ -393,7 +393,9 @@ if __name__ == "__main__":
     ) + timedelta(days=1)
     time_until_target = (target_time - current_time).total_seconds()
     logging.info(f"Sleeping until {target_time}...")
-    # time.sleep(time_until_target) ### Choose wait in seconds to how long after now you want the script to kick off
+    time.sleep(
+        time_until_target
+    )  ### Wait in seconds for after how long you want the script to kick off
 
     visa_automation = VisaAutomation()
     visa_automation.run()
