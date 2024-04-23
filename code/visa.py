@@ -164,6 +164,8 @@ class VisaAutomation:
         try:
             self.page.goto(self.appointment_link.format(appointment_id))
             self.page.wait_for_load_state("networkidle")
+            if is_multiple_users:
+                self.handle_confirm_page_befor_navigate_to_appointment()
         except Exception as e:
             time.sleep(120)
             self.navigate_to_appointments(appointment_id)
@@ -379,6 +381,15 @@ class VisaAutomation:
         logging.info("Sleeping for 5 mins due to error")
         time.sleep(300)
 
+    def handle_confirm_page_befor_navigate_to_appointment(self):
+        try:
+        # Click the "Continue" button
+            self.page.locator('input[type="submit"][name="commit"][value="Continue"]').click()
+            # logging.info("Successfully clicked the Continue button.")
+
+        except Exception as e:
+            # logging.error("Failed to click on the Continue button", exc_info=True)
+            self.navigate_to_appointments()
 
 if __name__ == "__main__":
     logging.basicConfig(
